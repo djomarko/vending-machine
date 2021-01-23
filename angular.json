@@ -1,123 +1,228 @@
 {
-    "version": 1,
-    "projects": {
-        "vending-machine": {
-            "root": "libs/vending-machine",
-            "sourceRoot": "libs/vending-machine/src",
-            "projectType": "library",
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["libs/vending-machine/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/libs/vending-machine"],
-                    "options": {
-                        "jestConfig": "libs/vending-machine/jest.config.js",
-                        "passWithNoTests": true
-                    }
+  "version": 1,
+  "projects": {
+    "vending-machine": {
+      "projectType": "application",
+      "root": "apps/vending-machine",
+      "sourceRoot": "apps/vending-machine/src",
+      "prefix": "vending-machine",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/vending-machine",
+            "index": "apps/vending-machine/src/index.html",
+            "main": "apps/vending-machine/src/main.ts",
+            "polyfills": "apps/vending-machine/src/polyfills.ts",
+            "tsConfig": "apps/vending-machine/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/vending-machine/src/favicon.ico",
+              "apps/vending-machine/src/assets"
+            ],
+            "styles": ["apps/vending-machine/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/vending-machine/src/environments/environment.ts",
+                  "with": "apps/vending-machine/src/environments/environment.prod.ts"
                 }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
+          }
         },
-        "vending-machine-e2e": {
-            "root": "apps/vending-machine-e2e",
-            "sourceRoot": "apps/vending-machine-e2e/src",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@nrwl/cypress:cypress",
-                    "options": {
-                        "cypressConfig": "apps/vending-machine-e2e/cypress.json",
-                        "tsConfig": "apps/vending-machine-e2e/tsconfig.e2e.json",
-                        "devServerTarget": "vending-machine:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "vending-machine:serve:production"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "apps/vending-machine-e2e/**/*.{js,ts}"
-                        ]
-                    }
-                }
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "vending-machine:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "vending-machine:build:production"
             }
+          }
         },
-        "ui-components": {
-            "root": "libs/ui-components",
-            "sourceRoot": "libs/ui-components/src",
-            "projectType": "library",
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["libs/ui-components/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/libs/ui-components"],
-                    "options": {
-                        "jestConfig": "libs/ui-components/jest.config.js",
-                        "passWithNoTests": true
-                    }
-                }
-            }
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "vending-machine:build"
+          }
         },
-        "engine": {
-            "root": "libs/engine",
-            "sourceRoot": "libs/engine/src",
-            "projectType": "library",
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["libs/engine/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/libs/engine"],
-                    "options": {
-                        "jestConfig": "libs/engine/jest.config.js",
-                        "passWithNoTests": true
-                    }
-                }
-            }
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/vending-machine/src/**/*.ts",
+              "apps/vending-machine/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/vending-machine"],
+          "options": {
+            "jestConfig": "apps/vending-machine/jest.config.js",
+            "passWithNoTests": true
+          }
         }
+      }
     },
-    "cli": {
-        "defaultCollection": "@nrwl/angular"
-    },
-    "schematics": {
-        "@nrwl/angular": {
-            "application": {
-                "linter": "eslint"
-            },
-            "library": {
-                "linter": "eslint"
-            },
-            "storybook-configuration": {
-                "linter": "eslint"
+    "vending-machine-e2e": {
+      "root": "apps/vending-machine-e2e",
+      "sourceRoot": "apps/vending-machine-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/vending-machine-e2e/cypress.json",
+            "tsConfig": "apps/vending-machine-e2e/tsconfig.e2e.json",
+            "devServerTarget": "vending-machine:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "vending-machine:serve:production"
             }
+          }
         },
-        "@nrwl/angular:application": {
-            "unitTestRunner": "jest",
-            "e2eTestRunner": "cypress"
-        },
-        "@nrwl/angular:library": {
-            "unitTestRunner": "jest"
-        },
-        "@nrwl/angular:component": {
-            "style": "scss"
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/vending-machine-e2e/**/*.{js,ts}"
+            ]
+          }
         }
+      }
     },
-    "defaultProject": "vending-machine"
+    "ui-components": {
+      "root": "libs/ui-components",
+      "sourceRoot": "libs/ui-components/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui-components/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/ui-components"
+          ],
+          "options": {
+            "jestConfig": "libs/ui-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/ui-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "options": {
+            "uiFramework": "@storybook/angular",
+            "outputPath": "dist/storybook/ui-components",
+            "config": {
+              "configFolder": "libs/ui-components/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
+    "engine": {
+      "root": "libs/engine",
+      "sourceRoot": "libs/engine/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/engine/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/engine"
+          ],
+          "options": {
+            "jestConfig": "libs/engine/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "vending-machine"
 }
