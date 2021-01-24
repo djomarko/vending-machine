@@ -1,0 +1,12 @@
+<div>
+    <div>
+        <label>Stock</label>
+        <ul>
+            <li *ngFor="let product of products">
+                <label>{{ product.name }}</label
+                ><span>{{ product.quantity }}</span>
+            </li>
+        </ul>
+    </div>
+    <div>{{ message }}</div>
+</div>

@@ -1,4 +1,4 @@
-import { ProductsEntity } from './products.models';
+import { Product } from '@vending-machine/models';
 import * as ProductsActions from './products.actions';
 import { State, initialState, reducer } from './products.reducer';
 
@@ -9,7 +9,7 @@ describe('Products Reducer', () => {
             name,
             price,
             quantity,
-        } as ProductsEntity);
+        } as Product);
 
     it('loadProducts should return set the list of known Products', () => {
         const products = [
@@ -45,6 +45,7 @@ describe('Products Reducer', () => {
                     'PRODUCT-BBB': createProductsEntity('PRODUCT-BBB'),
                 },
                 error: null,
+                isDispensing: false
             };
         });
 

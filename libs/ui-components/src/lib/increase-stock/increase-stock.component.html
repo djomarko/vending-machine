@@ -1,1 +1,5 @@
-<p>increase-stock works!</p>
+<ul>
+    <li *ngFor='let product of products'>
+        <input type='number' #quantity/> {{product.name}} <button (click)='stockProduct(product.name, +quantity.value )'>Add product</button>
+    </li>
+</ul>

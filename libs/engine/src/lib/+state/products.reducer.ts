@@ -1,13 +1,12 @@
-import { createReducer, on, Action } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Errors } from '../models/errors';
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import { Action, createReducer, on } from '@ngrx/store';
+import { Errors, Product } from '@vending-machine/models';
 
 import * as ProductsActions from './products.actions';
-import { ProductsEntity } from './products.models';
 
 export const PRODUCTS_FEATURE_KEY = 'products';
 
-export interface State extends EntityState<ProductsEntity> {
+export interface State extends EntityState<Product> {
     error?: Errors | string | null; // last known error (if any)
     isDispensing: boolean;
 }
@@ -16,7 +15,7 @@ export interface ProductsPartialState {
     readonly [PRODUCTS_FEATURE_KEY]: State;
 }
 
-export const productsAdapter: EntityAdapter<ProductsEntity> = createEntityAdapter<ProductsEntity>(
+export const productsAdapter: EntityAdapter<Product> = createEntityAdapter<Product>(
     {
         selectId: (instance) => instance.name,
     }

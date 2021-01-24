@@ -8,7 +8,7 @@ import { DataPersistence, NxModule } from '@nrwl/angular';
 import { hot } from '@nrwl/angular/testing';
 
 import { Observable } from 'rxjs';
-import { Errors } from '../models/errors';
+import { Errors } from '@vending-machine/models';
 import * as ProductsActions from './products.actions';
 
 import { ProductsEffects } from './products.effects';

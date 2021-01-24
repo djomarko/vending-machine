@@ -1,14 +1,9 @@
 {
   "npmScope": "vending-machine",
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -29,20 +24,13 @@
     }
   },
   "projects": {
-    "vending-machine": {
-      "tags": []
-    },
+    "vending-machine": { "tags": [] },
     "vending-machine-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "vending-machine"
-      ]
+      "implicitDependencies": ["vending-machine"]
     },
-    "ui-components": {
-      "tags": []
-    },
-    "engine": {
-      "tags": []
-    }
+    "ui-components": { "tags": [] },
+    "engine": { "tags": [] },
+    "models": { "tags": [] }
   }
 }

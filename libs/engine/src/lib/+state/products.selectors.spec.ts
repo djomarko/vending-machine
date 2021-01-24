@@ -1,7 +1,3 @@
-import { ProductsEntity } from './products.models';
-import { State, productsAdapter, initialState } from './products.reducer';
-import * as ProductsSelectors from './products.selectors';
-
 describe('Products Selectors', () => {
    /* const ERROR_MSG = 'No Error Available';
     const createProductsEntity = (name = '', price = 1, quantity = 1) =>

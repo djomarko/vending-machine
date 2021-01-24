@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-    Actions,
-    createEffect,
-    ofType,
-    ROOT_EFFECTS_INIT,
-} from '@ngrx/effects';
+import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { Errors, Product } from '@vending-machine/models';
 import { combineLatest, of } from 'rxjs';
 import { exhaustMap, filter, map, take, timeout } from 'rxjs/operators';
-import { Errors } from '../models/errors';
 import * as stock from '../stock.json';
 import * as ProductsActions from './products.actions';
-import { ProductsEntity } from './products.models';
 import { ProductsPartialState } from './products.reducer';
 import { getProduct, isProductDispensing } from './products.selectors';
 
@@ -24,7 +18,7 @@ export class ProductsEffects {
         this.actions$.pipe(
             ofType(ROOT_EFFECTS_INIT),
             map(() => {
-                const products: ProductsEntity[] = stock;
+                const products: Product[] = stock;
                 return ProductsActions.loadProducts({ products });
             })
         )
@@ -49,7 +43,7 @@ export class ProductsEffects {
                     .pipe(
                         take(1),
                         filter((product) => !!product),
-                        map((product: ProductsEntity) => {
+                        map((product: Product) => {
                             return ProductsActions.updateProductStock({
                                 id: product.name,
                                 changes: {

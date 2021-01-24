@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProductsEntity } from './products.models';
 import {
     PRODUCTS_FEATURE_KEY,
     State,

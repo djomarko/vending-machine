@@ -110,9 +110,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/vending-machine-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/vending-machine-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -125,16 +123,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/ui-components/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/ui-components/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/ui-components"
-          ],
+          "outputs": ["coverage/libs/ui-components"],
           "options": {
             "jestConfig": "libs/ui-components/jest.config.js",
             "passWithNoTests": true
@@ -180,19 +174,32 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/engine/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/engine/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/engine"
-          ],
+          "outputs": ["coverage/libs/engine"],
           "options": {
             "jestConfig": "libs/engine/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "models": {
+      "projectType": "library",
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "prefix": "vending-machine",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/models/src/**/*.ts",
+              "libs/models/src/**/*.html"
+            ]
           }
         }
       }
