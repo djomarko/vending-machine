@@ -1,7 +1,7 @@
-# vending-machine
+# engine
 
-This library was generated with [Nx](https://nx.dev).
+This library was generated with [Nx](https://nx.dev). Library houses all the ngrx and smart components
 
 ## Running unit tests
 
-Run `nx test vending-machine` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test engine` to execute the unit tests via [Jest](https://jestjs.io).
