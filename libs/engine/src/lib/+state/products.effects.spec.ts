@@ -27,11 +27,10 @@ describe('ProductsEffects', () => {
                 provideMockStore(),
                 {
                     provide: INITIAL_STOCK,
-                    useValue: [{ name: 'can', price: 1.2, quantity: 1 }],
+                    useValue: [],
                 },
             ],
         });
-
         effects = TestBed.inject(ProductsEffects);
     });
 

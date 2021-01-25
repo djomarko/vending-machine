@@ -17,7 +17,7 @@ import * as ProductsActions from './products.actions';
 export const PRODUCTS_FEATURE_KEY = 'products';
 
 export interface State extends EntityState<Product> {
-    message?: string | null; // last known error (if any)
+    message?: string | null;
     dispense: DispenseProduct | null;
 }
 
@@ -47,6 +47,9 @@ const productsReducer = createReducer(
         }
 
         const product = state.entities[productName];
+        if(!product || !!state.dispense){
+            return state;
+        }
 
         const update: Update<Product> = {
             id: productName,
@@ -97,15 +100,6 @@ const productsReducer = createReducer(
     }),
     on(ProductsActions.dispensedProduct, (state) => {
         return { ...state, dispense: null, message: null };
-    }),
-    on(ProductsActions.resetProductsError, (state) => {
-        if (!state.message) {
-            return state;
-        }
-        return {
-            ...state,
-            message: null,
-        };
     })
 );
 

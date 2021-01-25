@@ -24,6 +24,6 @@ export class ProductsEffects {
 
     constructor(
         private actions$: Actions,
-        @Inject(INITIAL_STOCK) private products: Product[]
+        @Inject(INITIAL_STOCK) private products: Product[] = []
     ) {}
 }

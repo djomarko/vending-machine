@@ -1,11 +1,15 @@
+import { DispenseProduct, Product } from '@vending-machine/models';
+import { initialState, productsAdapter } from './products.reducer';
+import * as ProductsSelectors from './products.selectors';
+
 describe('Products Selectors', () => {
-   /* const ERROR_MSG = 'No Error Available';
-    const createProductsEntity = (name = '', price = 1, quantity = 1) =>
+    const getProductsId = (it) => it['name'];
+    const createProductsEntity = (name = '', price = 1.2, quantity = 1) =>
         ({
             name,
             price,
             quantity,
-        } as ProductsEntity);
+        } as Product);
 
     let state;
 
@@ -19,7 +23,8 @@ describe('Products Selectors', () => {
                 ],
                 {
                     ...initialState,
-                    error: null,
+                    message: null,
+                    dispense: null,
                 }
             ),
         };
@@ -34,23 +39,37 @@ describe('Products Selectors', () => {
             expect(selId).toBe('PRODUCT-BBB');
         });
 
-        it('getSelected() should return the selected Entity', () => {
-            const result = ProductsSelectors.getSelected(state);
-            const selId = getProductsId(result);
-
-            expect(selId).toBe('PRODUCT-BBB');
+        it('getProduct() should return the product if it exists', () => {
+            const fn = ProductsSelectors.getProduct.projector;
+            expect(fn(state.products.entities, { id: 'UNKNWON' })).toBe(undefined);
+            expect(fn(state.products.entities, { id: 'PRODUCT-AAA' })).toEqual(
+                expect.objectContaining({ name: 'PRODUCT-AAA' })
+            );
         });
 
-        it("getProductsLoaded() should return the current 'loaded' status", () => {
-            const result = ProductsSelectors.getProductsLoaded(state);
+        it('productDispensing() should return the dispense state', () => {
+            const dispenseState: DispenseProduct =  {
+                productName: 'PRODUCT-AAA',
+                change: 10.1
+            }
 
-            expect(result).toBe(true);
+            state.products.dispense = dispenseState;
+
+            const results = ProductsSelectors.productDispensing(state);
+            expect(results).toBe(dispenseState);
         });
 
-        it("getProductsError() should return the current 'error' state", () => {
-            const result = ProductsSelectors.getProductsError(state);
+        describe('getMessage()', () => {
+           it('should return a welcome message if message state is empty', () => {
+               const results = ProductsSelectors.getMessage(state);
+               expect(results).toBe('Welcome! Try our products');
+           });
 
-            expect(result).toBe(ERROR_MSG);
+            it(`should return message state if it's set`, () => {
+                state.products.message = 'ERROR';
+                const results = ProductsSelectors.getMessage(state);
+                expect(results).toBe('ERROR');
+            });
         });
-    });*/
+    });
 });

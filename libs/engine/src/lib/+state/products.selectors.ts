@@ -19,7 +19,7 @@ export const getAllProducts = createSelector(getProductsState, (state: State) =>
     selectAll(state)
 );
 
-export const getProductsEntities = createSelector(
+const getProductsEntities = createSelector(
     getProductsState,
     (state: State) => selectEntities(state)
 );
