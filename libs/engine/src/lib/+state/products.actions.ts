@@ -1,6 +1,6 @@
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { Errors, Product } from '@vending-machine/models';
+import { Errors, Product, UpdateStock } from '@vending-machine/models';
 
 export const loadProducts = createAction(
     '[Products] Load Initial Products',
@@ -18,7 +18,7 @@ export const resetProductsError = createAction(
 
 export const stockUpProducts = createAction(
     '[Product/UI] Stock up product',
-    props<{ id: string; quantity: number }>()
+    props<UpdateStock>()
 );
 
 export const updateProductStock = createAction(
@@ -28,7 +28,7 @@ export const updateProductStock = createAction(
 
 export const purchaseProducts = createAction(
     '[Product/UI] Purchase Product',
-    props<{ id: string; payment: number }>()
+    props<{ productName: string; payment: number }>()
 );
 
 export const dispensingProduct = createAction(

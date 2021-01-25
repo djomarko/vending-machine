@@ -6,12 +6,19 @@ import { ProductDisplayComponent } from './product-display/product-display.compo
 import { IncreaseStockComponent } from './increase-stock/increase-stock.component';
 import { MessageDisplayComponent } from './message-display/message-display.component';
 
-
-
 @NgModule({
-  declarations: [PurchaseDashboardComponent, ProductDisplayComponent, IncreaseStockComponent, MessageDisplayComponent],
-  imports: [
-    CommonModule, FormsModule
-  ]
+    declarations: [
+        PurchaseDashboardComponent,
+        ProductDisplayComponent,
+        IncreaseStockComponent,
+        MessageDisplayComponent,
+    ],
+    imports: [CommonModule, FormsModule],
+    exports: [
+        PurchaseDashboardComponent,
+        ProductDisplayComponent,
+        IncreaseStockComponent,
+        MessageDisplayComponent,
+    ],
 })
-export class UiComponentsModule { }
+export class UiComponentsModule {}

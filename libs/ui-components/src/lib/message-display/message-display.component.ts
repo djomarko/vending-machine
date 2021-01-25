@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from '@vending-machine/models';
 
 @Component({
-    selector: 'message-display',
+    selector: 'vm-message-display',
     templateUrl: './message-display.component.html',
     styleUrls: ['./message-display.component.scss'],
 })

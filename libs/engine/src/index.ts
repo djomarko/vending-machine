@@ -1,1 +1,1 @@
-export * from './lib/vending-machine-engine.module';
+export * from './lib/machine-engine.module';

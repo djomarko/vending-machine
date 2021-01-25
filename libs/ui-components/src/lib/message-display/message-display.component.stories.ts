@@ -1,9 +1,8 @@
 import { MessageDisplayComponent } from './message-display.component';
 
 export default {
-  title: 'MessageDisplayComponent'
-}
-
+    title: 'MessageDisplayComponent',
+};
 
 const Template = (args: MessageDisplayComponent) => ({
     moduleMetadata: {

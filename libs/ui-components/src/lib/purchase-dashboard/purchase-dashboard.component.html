@@ -6,7 +6,7 @@
     (ngModelChange)="payment = $event"
 />
 <div>
-    <button
+    <button class='btn btn-dark'
         *ngFor="let product of products"
         (click)="onProductPurchase(product.name, payment)"
     ><img src='can.svg' /><span>{{product.price | currency}}</span></button>

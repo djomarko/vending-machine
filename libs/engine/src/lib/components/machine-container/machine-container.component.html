@@ -1,0 +1,5 @@
+<main>
+  <vm-message-display [products]="products$ | async"></vm-message-display>
+  <vm-purchase-dashboard [products]="products$ | async" (purchase)='onProductPurchase($event)'></vm-purchase-dashboard>
+  <vm-increase-stock [products]="products$ | async" (addProducts)='onProductsAdded($event)'></vm-increase-stock>
+</main>

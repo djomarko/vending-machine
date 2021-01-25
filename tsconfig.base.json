@@ -17,8 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@vending-machine/ui-components": ["libs/ui-components/src/index.ts"],
-      "@vending-machine/vending-machine": ["libs/vending-machine/src/index.ts"],
-      "@vending-machine/models": ["libs/models/src/index.ts"]
+      "@vending-machine/models": ["libs/models/src/index.ts"],
+      "@vending-machine/engine": ["libs/engine/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

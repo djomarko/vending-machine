@@ -1,12 +1,11 @@
-<div>
-    <div>
-        <label>Stock</label>
-        <ul>
-            <li *ngFor="let product of products">
-                <label>{{ product.name }}</label
-                ><span>{{ product.quantity }}</span>
-            </li>
-        </ul>
-    </div>
-    <div>{{ message }}</div>
+<div class='message-display'>
+  <div>
+    <label>Stock</label>
+    <ul class="row">
+      <li class="col" *ngFor="let product of products">
+        <label>{{ product.name }}</label> <span> {{ product.quantity }}</span>
+      </li>
+    </ul>
+  </div>
+  <h3 class="text-center">{{ message }}</h3>
 </div>

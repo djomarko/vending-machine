@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product, UpdateStock } from '@vending-machine/models';
 
 @Component({
-    selector: 'increase-stock',
+    selector: 'vm-increase-stock',
     templateUrl: './increase-stock.component.html',
     styleUrls: ['./increase-stock.component.scss'],
 })

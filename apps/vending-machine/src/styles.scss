@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-* {
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+body {
     font-family: 'IBM Plex Mono', monospace;
+}
+
+ul {
+  list-style-type:none;
+  padding: 0;
 }

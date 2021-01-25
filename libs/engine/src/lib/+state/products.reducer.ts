@@ -1,6 +1,11 @@
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import {
+    createEntityAdapter,
+    EntityAdapter,
+    EntityState,
+    Update,
+} from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import { Errors, Product } from '@vending-machine/models';
+import { DispenseProduct, Errors, Product } from '@vending-machine/models';
 
 import * as ProductsActions from './products.actions';
 
@@ -9,6 +14,7 @@ export const PRODUCTS_FEATURE_KEY = 'products';
 export interface State extends EntityState<Product> {
     error?: Errors | string | null; // last known error (if any)
     isDispensing: boolean;
+    dispense: DispenseProduct | null;
 }
 
 export interface ProductsPartialState {
@@ -24,6 +30,7 @@ export const productsAdapter: EntityAdapter<Product> = createEntityAdapter<Produ
 export const initialState: State = productsAdapter.getInitialState({
     error: null,
     isDispensing: false,
+    dispense: null,
 });
 
 const productsReducer = createReducer(
@@ -31,11 +38,54 @@ const productsReducer = createReducer(
     on(ProductsActions.loadProducts, (state, { products }) =>
         productsAdapter.setAll(products, state)
     ),
-    on(ProductsActions.setProductsError, (state, { error }) => {
-        if (!error) {
+    on(ProductsActions.stockUpProducts, (state, { productName, quantity }) => {
+        if (quantity <= 0) {
+            return { ...state, error: Errors.NEGATIVE_STOCK };
+        }
+
+        const product = state.entities[productName];
+
+        const update: Update<Product> = {
+            id: productName,
+            changes: {
+                quantity: product.quantity + quantity,
+            },
+        };
+        return productsAdapter.updateOne(update, state);
+    }),
+    on(ProductsActions.purchaseProducts, (state, { productName, payment }) => {
+        if (state.dispense) {
             return state;
         }
-        return { ...state, error };
+
+        const product = state.entities[productName];
+        if (!product) {
+            return state;
+        }
+
+        if (product.price > payment) {
+            return { ...state, error: Errors.INSUFFICIENT_MONEY };
+        }
+
+        const change = payment - product.price;
+
+        const update: Update<Product> = {
+            id: productName,
+            changes: {
+                quantity: product.quantity - 1,
+            },
+        };
+
+        return productsAdapter.updateOne(update, {
+            ...state,
+            dispense: {
+                productName,
+                change,
+            },
+        });
+    }),
+    on(ProductsActions.dispensedProduct, (state) => {
+        return {...state, dispense: null};
     }),
     on(ProductsActions.resetProductsError, (state) => {
         if (!state.error) {
@@ -45,20 +95,6 @@ const productsReducer = createReducer(
             ...state,
             error: null,
         };
-    }),
-    on(ProductsActions.dispensingProduct, (state) => {
-        return { ...state, isDispensing: true };
-    }),
-    on(ProductsActions.dispensedProduct, (state, { product: id }) => {
-        const product = state.entities[id];
-        if (!product) {
-            return state;
-        }
-        const updates = { id, changes: { quantity: product.quantity - 1 } };
-        return productsAdapter.updateOne(updates, {
-            ...state,
-            isDispensing: false,
-        });
     })
 );
 

@@ -1,5 +1,8 @@
 <ul>
-    <li *ngFor='let product of products'>
-        <input type='number' #quantity/> {{product.name}} <button (click)='stockProduct(product.name, +quantity.value )'>Add product</button>
-    </li>
+  <li *ngFor="let product of products">
+    <input type="number" #quantity /> {{ product.name }}
+    <button class='btn btn-primary' (click)="stockProduct(product.name, +quantity.value)">
+      Add product
+    </button>
+  </li>
 </ul>
