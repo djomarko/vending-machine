@@ -37,6 +37,5 @@ export const dispensingProduct = createAction(
 );
 
 export const dispensedProduct = createAction(
-    '[Product/Effect] Dispensing Product',
-    props<{ product: string; change: number }>()
+    '[Product/Effect] Dispensing Product'
 );

@@ -1,15 +1,20 @@
-
 import { ProductDisplayComponent } from './product-display.component';
 
 export default {
-  title: 'ProductDisplayComponent'
-}
+    title: 'ProductDisplayComponent',
+};
 
-export const primary = () => ({
-  moduleMetadata: {
-    imports: []
-  },
-  component: ProductDisplayComponent,
-  props: {
-  }
-})
+const Template = (args: ProductDisplayComponent) => ({
+    moduleMetadata: {
+        imports: [],
+    },
+    component: ProductDisplayComponent,
+    props: {
+        ...args,
+    },
+});
+
+export const Primary = Template.bind({});
+Primary.args = {
+    noise: true,
+};

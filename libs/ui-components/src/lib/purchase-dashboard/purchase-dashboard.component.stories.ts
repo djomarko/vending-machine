@@ -20,7 +20,7 @@ Primary.args = {
     products: [
         {
             name: 'can',
-            icon: 'can.svg',
+            icon: 'assets/can.svg',
             price: 1.20,
         },
     ],

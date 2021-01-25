@@ -1,9 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Messages } from '@vending-machine/models';
 import {
     PRODUCTS_FEATURE_KEY,
-    State,
-    ProductsPartialState,
     productsAdapter,
+    ProductsPartialState,
+    State,
 } from './products.reducer';
 
 // Lookup the 'Products' feature state managed by NgRx
@@ -13,11 +14,6 @@ export const getProductsState = createFeatureSelector<
 >(PRODUCTS_FEATURE_KEY);
 
 const { selectAll, selectEntities } = productsAdapter.getSelectors();
-
-export const getProductsError = createSelector(
-    getProductsState,
-    (state: State) => state.error
-);
 
 export const getAllProducts = createSelector(getProductsState, (state: State) =>
     selectAll(state)
@@ -30,10 +26,15 @@ export const getProductsEntities = createSelector(
 
 export const getProduct = createSelector(
     getProductsEntities,
-    (entities, {id}) => id && entities[id]
+    (entities, { id }) => id && entities[id]
 );
 
-export const isProductDispensing = createSelector(
+export const productDispensing = createSelector(
     getProductsState,
-    (state: State) => state.isDispensing
+    (state: State) => state.dispense
+);
+
+export const getMessage = createSelector(
+    getProductsState,
+    ({ message }: State) => message || Messages.WELCOME
 );

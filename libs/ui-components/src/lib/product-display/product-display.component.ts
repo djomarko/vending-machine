@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'product-display',
+  selector: 'vm-product-display',
   templateUrl: './product-display.component.html',
   styleUrls: ['./product-display.component.scss']
 })
-export class ProductDisplayComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ProductDisplayComponent {
+  @Input() noise = false;
 }

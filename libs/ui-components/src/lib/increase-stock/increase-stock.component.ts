@@ -11,11 +11,17 @@ export class IncreaseStockComponent {
 
     @Output() addProducts = new EventEmitter<UpdateStock>();
 
+    public showStock = false;
+
     public stockProduct(productName: string, quantity: number) {
-        if(isNaN(quantity)){
+        if(isNaN(quantity) || quantity % 1 !== 0 ){
             return;
         }
 
         this.addProducts.emit({ productName, quantity });
+    }
+
+    public toggleStock(){
+        this.showStock = !this.showStock;
     }
 }

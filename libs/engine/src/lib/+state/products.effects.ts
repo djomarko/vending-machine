@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Inject, Injectable } from '@angular/core';
+import {
+    Actions,
+    createEffect,
+    ofType,
+    ROOT_EFFECTS_INIT,
+} from '@ngrx/effects';
+import { INITIAL_STOCK } from '@vending-machine/engine';
 import { Product } from '@vending-machine/models';
 import { map } from 'rxjs/operators';
-import * as stock from '../stock.json';
 import * as ProductsActions from './products.actions';
-import { ProductsPartialState } from './products.reducer';
 
 @Injectable()
 export class ProductsEffects {
@@ -15,15 +18,12 @@ export class ProductsEffects {
     init$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ROOT_EFFECTS_INIT),
-            map(() => {
-                const products: Product[] = stock.default;
-                return ProductsActions.loadProducts({ products });
-            })
+            map(() => ProductsActions.loadProducts({ products: this.products }))
         )
     );
 
     constructor(
         private actions$: Actions,
-        private store$: Store<ProductsPartialState>
+        @Inject(INITIAL_STOCK) private products: Product[]
     ) {}
 }

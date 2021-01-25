@@ -1,5 +1,21 @@
-<main>
-  <vm-message-display [products]="products$ | async"></vm-message-display>
-  <vm-purchase-dashboard [products]="products$ | async" (purchase)='onProductPurchase($event)'></vm-purchase-dashboard>
-  <vm-increase-stock [products]="products$ | async" (addProducts)='onProductsAdded($event)'></vm-increase-stock>
+<main class="container">
+  <div class="row pb-3">
+    <div class="col-6 position-relative">
+      <vm-increase-stock
+        [products]="products$ | async"
+        (addProducts)="onProductsAdded($event)"
+      ></vm-increase-stock>
+      <vm-product-display class="mt-5 d-block" [noise]="makeNoise"></vm-product-display>
+    </div>
+    <div class="col-6">
+      <vm-message-display
+        [products]="products$ | async"
+        [message]="message$ | async"
+      ></vm-message-display>
+      <vm-purchase-dashboard
+        [products]="products$ | async"
+        (purchase)="onProductPurchase($event)"
+      ></vm-purchase-dashboard>
+    </div>
+  </div>
 </main>

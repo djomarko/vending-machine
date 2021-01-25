@@ -1,1 +1,9 @@
-<p>product-display works!</p>
+<div class="product-window position-relative">
+  <div *ngIf='noise' class='noise'>
+    <div class='noise-top'>CLICK!</div>
+    <div class='noise-middle'>BANG!</div>
+    <div class='noise-bottom'>THUD!</div>
+  </div>
+  <img class="w-100" src="assets/vm-window.png" />
+  <h3 class="border rounded text-center text-muted p-3 mt-4">PUSH</h3>
+</div>

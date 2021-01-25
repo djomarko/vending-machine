@@ -1,13 +1,25 @@
-
-<input
+<div class="border rounded mb-4 px-3 py-4">
+  <div><label>Amount Deposited</label></div>
+  <input
     type="number"
     [ngModel]="payment | number: '1.2'"
     [ngModelOptions]="{ updateOn: 'blur' }"
     (ngModelChange)="payment = $event"
-/>
-<div>
-    <button class='btn btn-dark'
-        *ngFor="let product of products"
-        (click)="onProductPurchase(product.name, payment)"
-    ><img src='can.svg' /><span>{{product.price | currency}}</span></button>
+  />
+</div>
+<div class="border rounded m-1">
+  <div *ngFor="let product of products">
+    <button id="product-{{ product.name }}"
+      class="btn btn-primary rounded-circle m-3"
+      (click)="onProductPurchase(product.name, payment)"
+      title="Buy a {{ product.name }}"
+    ></button>
+    <label class="border rounded p-1" for="product-{{ product.name }}"
+      >{{ product.name }} {{ product.price | currency }}</label
+    >
+  </div>
+  <div *ngFor="let i of missingProducts">
+    <button class="btn btn-primary rounded-circle m-3" disabled></button>
+    <label class="border rounded p-1">EMPTY</label>
+  </div>
 </div>

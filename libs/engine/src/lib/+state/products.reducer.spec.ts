@@ -21,7 +21,7 @@ describe('Products Reducer', () => {
         const result: State = reducer(initialState, action);
 
         expect(result.ids.length).toBe(2);
-        expect(result.error).toBeNull();
+        expect(result.message).toBeNull();
     });
 
     describe('unknown action', () => {
@@ -44,8 +44,8 @@ describe('Products Reducer', () => {
                     'PRODUCT-AAA': createProductsEntity(primaryProductName),
                     'PRODUCT-BBB': createProductsEntity('PRODUCT-BBB'),
                 },
-                error: null,
-                isDispensing: false
+                message: null,
+                dispense: null,
             };
         });
 
@@ -56,18 +56,18 @@ describe('Products Reducer', () => {
                 });
                 const result = reducer(state, action);
 
-                expect(result.error).toBe('ERROR');
+                expect(result.message).toBe('ERROR');
             });
         });
 
         describe('resetProductsError', () => {
             it('should reset the error', () => {
-                state.error = 'ERROR';
+                state.message = 'ERROR';
 
                 const action = ProductsActions.resetProductsError();
                 const result = reducer(state, action);
 
-                expect(result.error).toBe(null);
+                expect(result.message).toBe(null);
             });
         });
 

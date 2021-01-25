@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Product Dispensed</h2>
+<mat-dialog-content>
+  <div class='text-center'>
+    <div><img src="{{ data?.product.icon }}" /></div>
+    <strong>1 X {{ data?.product.name }}</strong>
+  </div>
+  <p>Change returned: {{ data?.change | currency }}</p>
+</mat-dialog-content>

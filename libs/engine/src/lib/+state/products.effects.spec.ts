@@ -2,22 +2,20 @@ import { TestBed } from '@angular/core/testing';
 import { ROOT_EFFECTS_INIT } from '@ngrx/effects';
 
 import { provideMockActions } from '@ngrx/effects/testing';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { DataPersistence, NxModule } from '@nrwl/angular';
 import { hot } from '@nrwl/angular/testing';
+import { INITIAL_STOCK } from '@vending-machine/engine';
 
 import { Observable } from 'rxjs';
-import { Errors } from '@vending-machine/models';
 import * as ProductsActions from './products.actions';
 
 import { ProductsEffects } from './products.effects';
-import { ProductsPartialState } from './products.reducer';
 
 describe('ProductsEffects', () => {
     let actions: Observable<any>;
     let effects: ProductsEffects;
-    let store: MockStore<ProductsPartialState>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -27,11 +25,14 @@ describe('ProductsEffects', () => {
                 DataPersistence,
                 provideMockActions(() => actions),
                 provideMockStore(),
+                {
+                    provide: INITIAL_STOCK,
+                    useValue: [{ name: 'can', price: 1.2, quantity: 1 }],
+                },
             ],
         });
 
         effects = TestBed.inject(ProductsEffects);
-        store = TestBed.inject(MockStore);
     });
 
     describe('init$', () => {
@@ -45,65 +46,6 @@ describe('ProductsEffects', () => {
             });
 
             expect(effects.init$).toBeObservable(expected);
-        });
-    });
-
-    describe('addStock$', () => {
-        it('should send a error action if the quantity is negative', () => {
-            actions = hot('-a-|', {
-                a: ProductsActions.stockUpProducts({ id: 'can', quantity: -1 }),
-            });
-
-            const expected = hot('-a-|', {
-                a: ProductsActions.setProductsError({
-                    error: Errors.NEGATIVE_STOCK,
-                }),
-            });
-
-            expect(effects.addStock$).toBeObservable(expected);
-        });
-        it('should send a error action if the quantity is 0', () => {
-            actions = hot('-a-|', {
-                a: ProductsActions.stockUpProducts({ id: 'can', quantity: 0 }),
-            });
-
-            const expected = hot('-a-|', {
-                a: ProductsActions.setProductsError({
-                    error: Errors.NEGATIVE_STOCK,
-                }),
-            });
-
-            expect(effects.addStock$).toBeObservable(expected);
-        });
-        it('should send an update product stock by increasing the current stock', () => {
-            store.setState({
-                products: {
-                    ids: ['can'],
-                    entities: {
-                        can: {
-                            name: 'can',
-                            price: 1.2,
-                            quantity: 4,
-                        },
-                    },
-                    isDispensing: false
-                },
-            });
-
-            actions = hot('-a-|', {
-                a: ProductsActions.stockUpProducts({ id: 'can', quantity: 10 }),
-            });
-
-            const expected = hot('-a-|', {
-                a: ProductsActions.updateProductStock({
-                    id: 'can',
-                    changes: {
-                        quantity: 14
-                    }
-                }),
-            });
-
-            expect(effects.addStock$).toBeObservable(expected);
         });
     });
 });

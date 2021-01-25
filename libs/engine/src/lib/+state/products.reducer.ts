@@ -5,15 +5,19 @@ import {
     Update,
 } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
-import { DispenseProduct, Errors, Product } from '@vending-machine/models';
+import {
+    DispenseProduct,
+    Errors,
+    Messages,
+    Product,
+} from '@vending-machine/models';
 
 import * as ProductsActions from './products.actions';
 
 export const PRODUCTS_FEATURE_KEY = 'products';
 
 export interface State extends EntityState<Product> {
-    error?: Errors | string | null; // last known error (if any)
-    isDispensing: boolean;
+    message?: string | null; // last known error (if any)
     dispense: DispenseProduct | null;
 }
 
@@ -28,8 +32,7 @@ export const productsAdapter: EntityAdapter<Product> = createEntityAdapter<Produ
 );
 
 export const initialState: State = productsAdapter.getInitialState({
-    error: null,
-    isDispensing: false,
+    message: null,
     dispense: null,
 });
 
@@ -40,7 +43,7 @@ const productsReducer = createReducer(
     ),
     on(ProductsActions.stockUpProducts, (state, { productName, quantity }) => {
         if (quantity <= 0) {
-            return { ...state, error: Errors.NEGATIVE_STOCK };
+            return { ...state, message: Errors.NEGATIVE_STOCK };
         }
 
         const product = state.entities[productName];
@@ -51,7 +54,10 @@ const productsReducer = createReducer(
                 quantity: product.quantity + quantity,
             },
         };
-        return productsAdapter.updateOne(update, state);
+        return productsAdapter.updateOne(update, {
+            ...state,
+            message: `${Messages.RESUPPLIED} ${quantity} ${productName}(s)`,
+        });
     }),
     on(ProductsActions.purchaseProducts, (state, { productName, payment }) => {
         if (state.dispense) {
@@ -63,8 +69,12 @@ const productsReducer = createReducer(
             return state;
         }
 
-        if (product.price > payment) {
-            return { ...state, error: Errors.INSUFFICIENT_MONEY };
+        if (!payment || product.price > payment) {
+            return { ...state, message: Errors.INSUFFICIENT_MONEY };
+        }
+
+        if (product.quantity === 0) {
+            return { ...state, message: Errors.INSUFFICIENT_STOCK };
         }
 
         const change = payment - product.price;
@@ -78,6 +88,7 @@ const productsReducer = createReducer(
 
         return productsAdapter.updateOne(update, {
             ...state,
+            message: Messages.DISPENSING,
             dispense: {
                 productName,
                 change,
@@ -85,15 +96,15 @@ const productsReducer = createReducer(
         });
     }),
     on(ProductsActions.dispensedProduct, (state) => {
-        return {...state, dispense: null};
+        return { ...state, dispense: null, message: null };
     }),
     on(ProductsActions.resetProductsError, (state) => {
-        if (!state.error) {
+        if (!state.message) {
             return state;
         }
         return {
             ...state,
-            error: null,
+            message: null,
         };
     })
 );

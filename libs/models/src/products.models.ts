@@ -19,3 +19,8 @@ export interface DispenseProduct {
     productName: string;
     change: number;
 }
+
+export interface DispenseData {
+    product: Product;
+    change: number;
+}

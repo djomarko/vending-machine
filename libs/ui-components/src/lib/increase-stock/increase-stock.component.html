@@ -1,8 +1,16 @@
-<ul>
-  <li *ngFor="let product of products">
-    <input type="number" #quantity /> {{ product.name }}
-    <button class='btn btn-primary' (click)="stockProduct(product.name, +quantity.value)">
-      Add product
-    </button>
-  </li>
-</ul>
+<div class="border rounded p-0" [ngClass]="{ showStock: showStock }">
+  <button class="btn btn-secondary w-100" (click)="toggleStock()">
+    Add Stock
+  </button>
+  <ul *ngIf="showStock" class='pt-3'>
+    <li class="p-2" *ngFor="let product of products">
+      <input type="number" pattern="[0-9]*" #quantity /> {{ product.name }}
+      <button
+        class="btn btn-primary"
+        (click)="stockProduct(product.name, +quantity.value)"
+      >
+        Add
+      </button>
+    </li>
+  </ul>
+</div>
