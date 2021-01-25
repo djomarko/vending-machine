@@ -1,6 +1,5 @@
-import { action } from '@storybook/addon-actions';
 import { FormsModule } from '@angular/forms';
-import { PurchaseDashboardComponent } from '../purchase-dashboard/purchase-dashboard.component';
+import { action } from '@storybook/addon-actions';
 import { IncreaseStockComponent } from './increase-stock.component';
 
 export default {

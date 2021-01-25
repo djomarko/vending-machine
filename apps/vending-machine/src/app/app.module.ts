@@ -5,7 +5,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { INITIAL_STOCK, MachineEngineModule } from '@vending-machine/engine';
 import { UiComponentsModule } from '@vending-machine/ui-components';
-import { ProductsEffects } from '../../../../libs/engine/src/lib/+state/products.effects';
 
 import { AppComponent } from './app.component';
 import { stock } from './stock';
@@ -17,7 +16,7 @@ import { stock } from './stock';
         MachineEngineModule,
         UiComponentsModule,
         StoreModule.forRoot({}),
-        EffectsModule.forRoot([ProductsEffects]),
+        EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument(),
     ],
     providers: [{ provide: INITIAL_STOCK, useValue: stock }],

@@ -14,12 +14,12 @@
       (click)="onProductPurchase(product.name, payment)"
       title="Buy a {{ product.name }}"
     ></button>
-    <label class="border rounded p-1" for="product-{{ product.name }}"
+    <label class="border rounded p-1 pointer" for="product-{{ product.name }}"
       >{{ product.name }} {{ product.price | currency }}</label
     >
   </div>
   <div *ngFor="let i of missingProducts">
     <button class="btn btn-primary rounded-circle m-3" disabled></button>
-    <label class="border rounded p-1">EMPTY</label>
+    <label class="border rounded p-1 not-allowed">EMPTY</label>
   </div>
 </div>

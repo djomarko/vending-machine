@@ -1,13 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import {
-    Actions,
-    createEffect,
-    ofType,
-    ROOT_EFFECTS_INIT,
-} from '@ngrx/effects';
-import { INITIAL_STOCK } from '@vending-machine/engine';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Product } from '@vending-machine/models';
 import { map } from 'rxjs/operators';
+import { INITIAL_STOCK } from '../initial-stock.token';
 import * as ProductsActions from './products.actions';
 
 @Injectable()
@@ -17,7 +12,7 @@ export class ProductsEffects {
      */
     init$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(ROOT_EFFECTS_INIT),
+            ofType(ProductsActions.init),
             map(() => ProductsActions.loadProducts({ products: this.products }))
         )
     );

@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { ROOT_EFFECTS_INIT } from '@ngrx/effects';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -14,6 +13,7 @@ import * as ProductsActions from './products.actions';
 import { ProductsEffects } from './products.effects';
 
 describe('ProductsEffects', () => {
+    // eslint-disable-next-line
     let actions: Observable<any>;
     let effects: ProductsEffects;
 
@@ -27,7 +27,7 @@ describe('ProductsEffects', () => {
                 provideMockStore(),
                 {
                     provide: INITIAL_STOCK,
-                    useValue: [],
+                    useValue: [{ name: 'can', price: 1.2, quantity: 1 }],
                 },
             ],
         });
@@ -36,7 +36,7 @@ describe('ProductsEffects', () => {
 
     describe('init$', () => {
         it('should load the initial stock and price of a can into the machine when application loads', () => {
-            actions = hot('-a-|', { a: { type: ROOT_EFFECTS_INIT } });
+            actions = hot('-a-|', { a: ProductsActions.init() });
 
             const expected = hot('-a-|', {
                 a: ProductsActions.loadProducts({

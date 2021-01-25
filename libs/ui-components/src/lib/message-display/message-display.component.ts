@@ -9,5 +9,4 @@ import { Product } from '@vending-machine/models';
 export class MessageDisplayComponent {
     @Input() message: string;
     @Input() products: Pick<Product, 'name'|'quantity'>[];
-
 }
