@@ -2,6 +2,7 @@
   <div><label>Amount Deposited</label></div>
   <input
     type="number"
+    id="deposited-cash"
     [ngModel]="payment | number: '1.2'"
     [ngModelOptions]="{ updateOn: 'blur' }"
     (ngModelChange)="payment = $event"
@@ -9,7 +10,8 @@
 </div>
 <div class="border rounded m-1">
   <div *ngFor="let product of products">
-    <button id="product-{{ product.name }}"
+    <button
+      id="product-{{ product.name }}"
       class="btn btn-primary rounded-circle m-3"
       (click)="onProductPurchase(product.name, payment)"
       title="Buy a {{ product.name }}"

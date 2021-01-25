@@ -10,24 +10,27 @@
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    login(email: string, password: string): void;
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Chainable<Subject> {
+        deposit(money: number): void;
+        purchase(product: string): void;
+        addStock(product: string, quantity: number): void;
+    }
 }
 //
-// -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
+
+Cypress.Commands.add('deposit', (money) => {
+    cy.get(`#deposited-cash`).clear(money);
+    cy.get(`#deposited-cash`).type(money);
 });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('purchase', (product) => {
+    cy.get(`#product-${product}`).click();
+});
+
+Cypress.Commands.add('addStock', (product, quantity) => {
+    cy.get(`#toggle-stock`).click();
+    cy.get(`#add-${product} input`).type(quantity);
+    cy.get(`#add-${product} button`).click();
+    cy.get(`#toggle-stock`).click();
+});
